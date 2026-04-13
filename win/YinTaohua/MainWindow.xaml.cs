@@ -17,6 +17,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -399,6 +400,16 @@ namespace YinTaohua
         {
             if (SteamUserStats.GetAchievement("persuade", out bool a) && a) new Yan2024().Show();
             else MessageBox.Show("达成本篇某个结局后解锁");
+        }
+
+        private void title_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            BeginStoryboard((Storyboard)Resources["hidePoem"]);
+        }
+
+        private void load_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ((Storyboard)Resources["hidePoem"]).SkipToFill();
         }
     }
 }

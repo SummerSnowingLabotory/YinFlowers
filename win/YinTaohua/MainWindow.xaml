@@ -5,31 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:YinTaohua"
         mc:Ignorable="d"
-        x:Name ="mw" Title="阴桃花" FontFamily="思源宋体 CN" Width="750" Height="450" FontSize="20" xml:lang="zh-Hans" Background="#ccc">
+        x:Name ="mw" Title="阴桃花" FontFamily="思源宋体 CN" Width="750" Height="450" FontSize="16" xml:lang="zh-Hans" Background="#ccc">
+    <Window.Resources>
+        <Storyboard x:Key="hidePoem">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="poem" Storyboard.TargetProperty="Opacity">
+                <LinearDoubleKeyFrame KeyTime="0:0" Value="0"/>
+                <LinearDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="load" Storyboard.TargetProperty="Opacity">
+                <LinearDoubleKeyFrame KeyTime="0:0:0" Value="1"/>
+                <LinearDoubleKeyFrame KeyTime="0:0:3.5" Value="1"/>
+                <LinearDoubleKeyFrame KeyTime="0:0:4.5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="load" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+                <DiscreteObjectKeyFrame KeyTime="0:0:4">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Collapsed</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
     <Window.Triggers>
         <EventTrigger RoutedEvent="Loaded">
-            <BeginStoryboard x:Name="loading">
-                <Storyboard>
-                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="poem" Storyboard.TargetProperty="Opacity">
-                        <LinearDoubleKeyFrame KeyTime="0:0" Value="0"/>
-                        <LinearDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
-                    </DoubleAnimationUsingKeyFrames>
-                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="load" Storyboard.TargetProperty="Opacity">
-                        <LinearDoubleKeyFrame KeyTime="0:0:3.5" Value="1"/>
-                        <LinearDoubleKeyFrame KeyTime="0:0:4.5" Value="0"/>
-                    </DoubleAnimationUsingKeyFrames>
-                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="load" Storyboard.TargetProperty="Visibility">
-                        <DiscreteObjectKeyFrame KeyTime="0:0:4">
-                            <DiscreteObjectKeyFrame.Value>
-                                <Visibility>Collapsed</Visibility>
-                            </DiscreteObjectKeyFrame.Value>
-                        </DiscreteObjectKeyFrame>
-                    </ObjectAnimationUsingKeyFrames>
-                </Storyboard>
-            </BeginStoryboard>
-        </EventTrigger>
-        <EventTrigger RoutedEvent="MouseLeftButtonDown" SourceName="load">
-            <SkipStoryboardToFill BeginStoryboardName="loading"/>
+            <BeginStoryboard x:Name="loading" Storyboard="{StaticResource hidePoem}"/>
         </EventTrigger>
     </Window.Triggers>
     <Grid MinWidth="720">
@@ -177,16 +181,19 @@
                     </TextBlock>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="load" Grid.ColumnSpan="3" Background="#ccc">
-                <StackPanel x:Name="poem" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False">
-                    <TextBlock Text="幻想若非幻想" Foreground="#888"/>
-                    <TextBlock Text="自然可超自然" Foreground="#888"/>
-                    <TextBlock Text="伴我梦中桃花" Foreground="#888"/>
-                    <TextBlock Text="懒识人间滋味" Foreground="#888"/>
-                </StackPanel>
+            <Grid x:Name="load" MouseLeftButtonDown="load_MouseLeftButtonDown" Grid.ColumnSpan="3" Background="#ccc">
+                <TextBlock x:Name="poem" Foreground="#888" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False">
+                    幻&#x200a;想&#x200a;若&#x200a;非&#x200a;幻&#x200a;想
+                    <LineBreak/>
+                    自&#x200a;然&#x200a;可&#x200a;超&#x200a;自&#x200a;然
+                    <LineBreak/>
+                    伴&#x200a;我&#x200a;梦&#x200a;中&#x200a;桃&#x200a;花
+                    <LineBreak/>
+                    懒&#x200a;识&#x200a;人&#x200a;间&#x200a;滋&#x200a;味
+                </TextBlock>
             </Grid>
         </Grid>
-        <Grid Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="15,-60,15,60">
+        <Grid MouseRightButtonDown="title_MouseRightButtonDown" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="15,-60,15,60">
             <TextBlock IsHitTestVisible="False" Foreground="#fec8ff" FontSize="60" HorizontalAlignment="Center">
                 <TextBlock.Effect>
                     <BlurEffect Radius="60"/>
@@ -227,14 +234,14 @@
         <Canvas x:Name="hallu" Grid.ColumnSpan="3" Visibility="Collapsed" SizeChanged="hallu_SizeChanged" Opacity="0.3" IsHitTestVisible="False"/>
 
         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6">
-            <CheckBox x:Name="night" Content="夜间模式" Click="night_Click" Foreground="{Binding Foreground,ElementName=mw}" Visibility="{Binding Visibility,ElementName=menu}" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-            <CheckBox x:Name="halluSwitch" Click="hallu_Click" Visibility="Collapsed" Content="幻听特效" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{Binding Background,ElementName=mainUI}" Foreground="{Binding Foreground,ElementName=mw}"/>
+            <CheckBox x:Name="night" Content="夜间模式" Click="night_Click" Foreground="{Binding Foreground,ElementName=mw}" Visibility="{Binding Visibility,ElementName=menu}" FontSize="11" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <CheckBox x:Name="halluSwitch" Click="hallu_Click" Visibility="Collapsed" Content="幻听特效" FontSize="11" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{Binding Background,ElementName=mainUI}" Foreground="{Binding Foreground,ElementName=mw}"/>
         </StackPanel>
         
-        <TextBlock Grid.ColumnSpan="3" TextAlignment="Right" Foreground="#333" HorizontalAlignment="Right" Opacity="0.75" Visibility="{Binding Visibility,ElementName=menu}" Margin="6" FontSize="12" VerticalAlignment="Bottom">
+        <TextBlock Grid.ColumnSpan="3" TextAlignment="Right" Foreground="#333" HorizontalAlignment="Right" Opacity="0.75" Visibility="{Binding Visibility,ElementName=menu}" Margin="6" FontSize="11" VerticalAlignment="Bottom">
             本游戏不支持Steam界面<LineBreak/>解锁成就不会弹窗
         </TextBlock>
-        <TextBlock Opacity="0.75" FontSize="12" Padding="6" Margin="0,0,20,0" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+        <TextBlock Opacity="0.75" FontSize="11" Padding="6" Margin="0,0,20,0" HorizontalAlignment="Left" VerticalAlignment="Bottom">
             <Hyperlink Foreground="White" Click="snowy_Click">©Snowy</Hyperlink>
         </TextBlock>
     </Grid>

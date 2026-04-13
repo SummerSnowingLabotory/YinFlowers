@@ -25,7 +25,7 @@
         </FlowDocumentScrollViewer>
         <StackPanel Name="menu" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock FontSize="20" Margin="10"><Hyperlink Tag="2023" Foreground="#FF751176" Click="Hyperlink_Click">2023</Hyperlink></TextBlock>
-            <TextBlock FontSize="20" Margin="10"><Hyperlink Tag="2024" Foreground="#FF751176" Click="Hyperlink_Click">2024</Hyperlink></TextBlock>
+            <TextBlock FontSize="20" Margin="10" Visibility="Collapsed"><Hyperlink Tag="2024" Foreground="#FF751176" Click="Hyperlink_Click">2024</Hyperlink></TextBlock>
         </StackPanel>
     </Grid>
 </Window>
