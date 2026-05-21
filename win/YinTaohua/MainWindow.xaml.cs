@@ -244,6 +244,7 @@ namespace YinTaohua
                 mainUI.Background = Brushes.White;
             }
         }
+        public static bool Closing = false;
         protected override void OnClosing(CancelEventArgs e)
         {
             try
@@ -265,6 +266,7 @@ namespace YinTaohua
             {
                 Console.WriteLine("Error writing app settings");
             }
+            Closing = true;
             base.OnClosing(e);
         }
 
