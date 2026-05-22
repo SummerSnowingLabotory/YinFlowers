@@ -75,14 +75,17 @@ namespace YinTaohua
         static readonly string[] emoji = new string[] { "///", "XD", "OwO" };
         protected override void OnClosing(CancelEventArgs e)
         {
-            double r = new Random().NextDouble();
-            for (int n = r < 0.05 ? 1 : (int)(r * 3) + 2; n > 0; n--)
+            if (!MainWindow.Closing)
             {
-                if (MessageBox.Show($"真的要关闭{particles[new Random().Next(0, particles.Length)]}？", "魇桃花", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                double r = new Random().NextDouble();
+                for (int n = r < 0.05 ? 1 : (int)(r * 3) + 2; n > 0; n--)
                 {
-                    e.Cancel = true;
-                    MessageBox.Show("这才对嘛！请继续欣赏“魇桃花”" + emoji[new Random().Next(0, emoji.Length)]);
-                    return;
+                    if (MessageBox.Show($"真的要关闭{particles[new Random().Next(0, particles.Length)]}？", "魇桃花", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                    {
+                        e.Cancel = true;
+                        MessageBox.Show("这才对嘛！请继续欣赏“魇桃花”" + emoji[new Random().Next(0, emoji.Length)]);
+                        return;
+                    }
                 }
             }
             base.OnClosing(e);
