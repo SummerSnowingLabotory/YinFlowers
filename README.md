@@ -1,7 +1,3 @@
-# Repository Archived
-
-This project has been moved to <https://github.com/SummerSnowingStudio/YinFlowers>.
-
 # 阴桃花 (The Flowers of Yin)
 
 **The Flowers of Yin** is an interactive novel that utilizes the syntax of ink. 
